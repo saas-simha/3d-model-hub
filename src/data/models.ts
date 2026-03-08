@@ -7,8 +7,9 @@ export interface Model3D {
   description: string;
   format: string;
   tags: string[];
-  geometry: "box" | "sphere" | "cylinder" | "torus" | "cone" | "torusKnot" | "dodecahedron" | "octahedron";
-  color: string;
+  modelUrl: string;
+  scale?: number;
+  position?: [number, number, number];
   featured?: boolean;
   recent?: boolean;
 }
@@ -22,50 +23,36 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  { name: "Cars", slug: "cars", icon: "🏎️", description: "High-performance vehicle models", count: 4 },
-  { name: "Bikes", slug: "bikes", icon: "🏍️", description: "Motorcycle and bike models", count: 4 },
-  { name: "Animals", slug: "animals", icon: "🦁", description: "Wildlife and pet models", count: 4 },
-  { name: "Human Faces", slug: "human-faces", icon: "👤", description: "Detailed face models", count: 4 },
-  { name: "Human Body", slug: "human-body", icon: "🧍", description: "Full body human models", count: 4 },
-  { name: "Action Models", slug: "action-models", icon: "⚡", description: "Animated action poses", count: 4 },
+  { name: "Vehicles", slug: "vehicles", icon: "🏎️", description: "Cars, toys, and transport models", count: 3 },
+  { name: "Animals & Nature", slug: "animals", icon: "🦊", description: "Wildlife, creatures, and natural objects", count: 4 },
+  { name: "Characters", slug: "characters", icon: "🧍", description: "Human figures and animated characters", count: 4 },
+  { name: "Objects", slug: "objects", icon: "💡", description: "Everyday objects and props", count: 5 },
 ];
 
 export const models: Model3D[] = [
-  // Cars
-  { id: "c1", name: "Tesla Model 3", slug: "tesla-model-3", category: "Cars", categorySlug: "cars", description: "Sleek electric sedan with aerodynamic design. Perfect for automotive UI projects.", format: "GLB", tags: ["car", "electric", "sedan", "tesla"], geometry: "box", color: "#00d4aa", featured: true },
-  { id: "c2", name: "Lamborghini Aventador", slug: "lamborghini-aventador", category: "Cars", categorySlug: "cars", description: "Iconic supercar with aggressive lines and V12 power.", format: "GLB", tags: ["car", "supercar", "lamborghini"], geometry: "box", color: "#ffd700", featured: true },
-  { id: "c3", name: "BMW M4", slug: "bmw-m4", category: "Cars", categorySlug: "cars", description: "German engineering meets performance driving.", format: "GLTF", tags: ["car", "bmw", "coupe"], geometry: "box", color: "#4488ff" },
-  { id: "c4", name: "Audi R8", slug: "audi-r8", category: "Cars", categorySlug: "cars", description: "Mid-engine sports car with quattro AWD.", format: "GLB", tags: ["car", "audi", "sports"], geometry: "box", color: "#ff4444", recent: true },
+  // Vehicles
+  { id: "v1", name: "Toy Car", slug: "toy-car", category: "Vehicles", categorySlug: "vehicles", description: "A detailed toy car model with metallic paint finish. Great for product visualization and game assets.", format: "GLB", tags: ["car", "vehicle", "toy", "transport"], modelUrl: "/models/toycar.glb", scale: 100, featured: true },
+  { id: "v2", name: "Damaged Helmet", slug: "damaged-helmet", category: "Vehicles", categorySlug: "vehicles", description: "A battle-worn sci-fi helmet with detailed surface damage, scratches, and wear. Industry-standard PBR test model.", format: "GLB", tags: ["helmet", "sci-fi", "armor", "vehicle"], modelUrl: "/models/damaged-helmet.glb", scale: 2.5, featured: true },
+  { id: "v3", name: "Sheen Chair", slug: "sheen-chair", category: "Vehicles", categorySlug: "vehicles", description: "Elegant fabric chair showcasing advanced material sheen rendering.", format: "GLB", tags: ["chair", "furniture", "sheen", "fabric"], modelUrl: "/models/sheen-chair.glb", scale: 3, recent: true },
 
-  // Bikes
-  { id: "b1", name: "Yamaha R1", slug: "yamaha-r1", category: "Bikes", categorySlug: "bikes", description: "Superbike with crossplane crankshaft technology.", format: "GLB", tags: ["bike", "yamaha", "superbike"], geometry: "cylinder", color: "#0066ff", featured: true },
-  { id: "b2", name: "Ducati Panigale", slug: "ducati-panigale", category: "Bikes", categorySlug: "bikes", description: "Italian racing excellence in motorcycle form.", format: "GLB", tags: ["bike", "ducati", "racing"], geometry: "cylinder", color: "#ff2200" },
-  { id: "b3", name: "Kawasaki Ninja", slug: "kawasaki-ninja", category: "Bikes", categorySlug: "bikes", description: "Legendary sportbike with iconic green livery.", format: "GLTF", tags: ["bike", "kawasaki", "sport"], geometry: "cylinder", color: "#00cc44", recent: true },
-  { id: "b4", name: "BMW S1000RR", slug: "bmw-s1000rr", category: "Bikes", categorySlug: "bikes", description: "German precision in a superbike package.", format: "GLB", tags: ["bike", "bmw", "superbike"], geometry: "cylinder", color: "#6699ff" },
+  // Animals & Nature
+  { id: "a1", name: "Fox", slug: "fox", category: "Animals & Nature", categorySlug: "animals", description: "An animated low-poly fox with smooth walk cycle. Perfect for game characters and nature scenes.", format: "GLB", tags: ["fox", "animal", "animated", "lowpoly"], modelUrl: "/models/fox.glb", scale: 0.03, featured: true },
+  { id: "a2", name: "Duck", slug: "duck", category: "Animals & Nature", categorySlug: "animals", description: "Classic rubber duck 3D model. A staple in 3D graphics testing and learning.", format: "GLB", tags: ["duck", "animal", "toy", "classic"], modelUrl: "/models/duck.glb", scale: 0.015 },
+  { id: "a3", name: "Dragon", slug: "dragon", category: "Animals & Nature", categorySlug: "animals", description: "Crystal dragon with stunning light attenuation effects. Demonstrates advanced material rendering.", format: "GLB", tags: ["dragon", "fantasy", "creature", "crystal"], modelUrl: "/models/dragon.glb", scale: 1.5, recent: true },
+  { id: "a4", name: "Avocado", slug: "avocado", category: "Animals & Nature", categorySlug: "animals", description: "Realistic avocado half with PBR textures. Great for food visualization and product demos.", format: "GLB", tags: ["avocado", "food", "nature", "realistic"], modelUrl: "/models/avocado.glb", scale: 30 },
 
-  // Animals
-  { id: "a1", name: "Dog", slug: "dog", category: "Animals", categorySlug: "animals", description: "Friendly canine companion model with detailed mesh.", format: "GLB", tags: ["animal", "dog", "pet"], geometry: "sphere", color: "#cc8844", featured: true },
-  { id: "a2", name: "Cat", slug: "cat", category: "Animals", categorySlug: "animals", description: "Elegant feline model with realistic proportions.", format: "GLB", tags: ["animal", "cat", "pet"], geometry: "sphere", color: "#ff9966" },
-  { id: "a3", name: "Lion", slug: "lion", category: "Animals", categorySlug: "animals", description: "Majestic king of the jungle with flowing mane.", format: "GLTF", tags: ["animal", "lion", "wild"], geometry: "dodecahedron", color: "#ffaa22" },
-  { id: "a4", name: "Horse", slug: "horse", category: "Animals", categorySlug: "animals", description: "Graceful equine model in standing pose.", format: "GLB", tags: ["animal", "horse", "equine"], geometry: "sphere", color: "#886644", recent: true },
+  // Characters
+  { id: "c1", name: "Animated Human", slug: "animated-human", category: "Characters", categorySlug: "characters", description: "CesiumMan - a fully animated humanoid character with walk cycle. Industry standard test model for animation pipelines.", format: "GLB", tags: ["human", "animated", "walk", "character"], modelUrl: "/models/cesiumman.glb", scale: 1.5, featured: true },
+  { id: "c2", name: "BrainStem Figure", slug: "brainstem", category: "Characters", categorySlug: "characters", description: "Animated robot/humanoid figure with complex skeletal animation. Great for testing rigging and animation systems.", format: "GLB", tags: ["robot", "animated", "skeleton", "character"], modelUrl: "/models/brainstem.glb", scale: 1.5, recent: true },
+  { id: "c3", name: "Rigged Figure", slug: "rigged-figure", category: "Characters", categorySlug: "characters", description: "A basic rigged humanoid figure in T-pose. Ideal for testing skeletal animations and character rigs.", format: "GLB", tags: ["human", "rigged", "tpose", "skeleton"], modelUrl: "/models/rigged-figure.glb", scale: 1.5 },
+  { id: "c4", name: "Fox Character", slug: "fox-character", category: "Characters", categorySlug: "characters", description: "Animated fox that can be used as a game character with smooth movement animations.", format: "GLB", tags: ["fox", "character", "animated", "game"], modelUrl: "/models/fox.glb", scale: 0.03 },
 
-  // Human Faces
-  { id: "f1", name: "Male Face", slug: "male-face", category: "Human Faces", categorySlug: "human-faces", description: "Detailed male face with realistic topology.", format: "GLB", tags: ["face", "male", "human"], geometry: "sphere", color: "#ffbb99" },
-  { id: "f2", name: "Female Face", slug: "female-face", category: "Human Faces", categorySlug: "human-faces", description: "Elegant female face model with fine detail.", format: "GLB", tags: ["face", "female", "human"], geometry: "sphere", color: "#ffccaa", featured: true },
-  { id: "f3", name: "Cartoon Face", slug: "cartoon-face", category: "Human Faces", categorySlug: "human-faces", description: "Stylized cartoon face for game projects.", format: "GLTF", tags: ["face", "cartoon", "stylized"], geometry: "sphere", color: "#44ddff", recent: true },
-  { id: "f4", name: "Stylized Face", slug: "stylized-face", category: "Human Faces", categorySlug: "human-faces", description: "Artistic stylized face with unique proportions.", format: "GLB", tags: ["face", "stylized", "art"], geometry: "octahedron", color: "#dd66ff" },
-
-  // Human Body
-  { id: "h1", name: "Standing Human", slug: "standing-human", category: "Human Body", categorySlug: "human-body", description: "T-pose standing human for rigging reference.", format: "GLB", tags: ["body", "standing", "human"], geometry: "cylinder", color: "#ffbb99" },
-  { id: "h2", name: "Walking Human", slug: "walking-human", category: "Human Body", categorySlug: "human-body", description: "Human in mid-walk cycle pose.", format: "GLB", tags: ["body", "walking", "human"], geometry: "cylinder", color: "#99bbff" },
-  { id: "h3", name: "Sitting Human", slug: "sitting-human", category: "Human Body", categorySlug: "human-body", description: "Relaxed sitting pose human model.", format: "GLTF", tags: ["body", "sitting", "human"], geometry: "cylinder", color: "#aaddcc", recent: true },
-  { id: "h4", name: "Running Human", slug: "running-human", category: "Human Body", categorySlug: "human-body", description: "Dynamic running pose with motion blur ready.", format: "GLB", tags: ["body", "running", "human"], geometry: "cone", color: "#ff8866" },
-
-  // Action Models
-  { id: "x1", name: "Jump Animation", slug: "jump-animation", category: "Action Models", categorySlug: "action-models", description: "High energy jump animation model.", format: "GLB", tags: ["action", "jump", "animation"], geometry: "torusKnot", color: "#ff4488", featured: true },
-  { id: "x2", name: "Walking Animation", slug: "walking-animation", category: "Action Models", categorySlug: "action-models", description: "Smooth walking cycle animation.", format: "GLB", tags: ["action", "walk", "animation"], geometry: "torus", color: "#44ff88" },
-  { id: "x3", name: "Dancing Animation", slug: "dancing-animation", category: "Action Models", categorySlug: "action-models", description: "Fun dancing animation loop.", format: "GLTF", tags: ["action", "dance", "animation"], geometry: "torusKnot", color: "#ff66dd", recent: true },
-  { id: "x4", name: "Fighting Animation", slug: "fighting-animation", category: "Action Models", categorySlug: "action-models", description: "Combat ready fighting stance animation.", format: "GLB", tags: ["action", "fight", "animation"], geometry: "torusKnot", color: "#ff2244" },
+  // Objects
+  { id: "o1", name: "Lantern", slug: "lantern", category: "Objects", categorySlug: "objects", description: "A detailed antique lantern with realistic materials and lighting-ready geometry.", format: "GLB", tags: ["lantern", "light", "prop", "antique"], modelUrl: "/models/lantern.glb", scale: 0.08, featured: true },
+  { id: "o2", name: "Iridescent Lamp", slug: "iridescent-lamp", category: "Objects", categorySlug: "objects", description: "Modern lamp with iridescent material effects demonstrating advanced rendering.", format: "GLB", tags: ["lamp", "iridescent", "light", "modern"], modelUrl: "/models/lamp.glb", scale: 1.5, recent: true },
+  { id: "o3", name: "Velvet Sofa", slug: "velvet-sofa", category: "Objects", categorySlug: "objects", description: "Glamorous velvet sofa with rich fabric material. Perfect for interior design visualization.", format: "GLB", tags: ["sofa", "furniture", "velvet", "interior"], modelUrl: "/models/sofa.glb", scale: 2 },
+  { id: "o4", name: "Designer Shoe", slug: "designer-shoe", category: "Objects", categorySlug: "objects", description: "High-detail sneaker with material variants. Great for product configurators and e-commerce.", format: "GLB", tags: ["shoe", "fashion", "product", "sneaker"], modelUrl: "/models/shoe.glb", scale: 12, featured: true },
+  { id: "o5", name: "Water Bottle", slug: "water-bottle", category: "Objects", categorySlug: "objects", description: "Realistic water bottle with PBR materials including glass transparency and labels.", format: "GLB", tags: ["bottle", "water", "product", "glass"], modelUrl: "/models/water-bottle.glb", scale: 12 },
 ];
 
 export const getModelBySlug = (slug: string) => models.find(m => m.slug === slug);
