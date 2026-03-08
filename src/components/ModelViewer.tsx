@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, useGLTF, Center, Html, ContactShadows, AccumulativeShadows, RandomizedLight, Stage } from "@react-three/drei";
-import { EffectComposer, Bloom, ChromaticAberration, Vignette } from "@react-three/postprocessing";
+import { OrbitControls, Environment, useGLTF, Center, Html, ContactShadows } from "@react-three/drei";
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { Suspense, useEffect, useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
