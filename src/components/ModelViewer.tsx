@@ -211,10 +211,6 @@ const ModelViewer = ({ model, className = "" }: ModelViewerProps) => {
               intensity={0.4}
               mipmapBlur
             />
-            <ChromaticAberration
-              blendFunction={BlendFunction.NORMAL}
-              offset={new THREE.Vector2(0.0005, 0.0005)}
-            />
             <Vignette
               offset={0.3}
               darkness={0.7}
