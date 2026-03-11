@@ -35,6 +35,6 @@ jobs:
           set ftp:ssl-allow yes;
           set ftp:passive-mode on;
           open -u ${{ secrets.DAI_FTP_USERNAME }},${{ secrets.DAI_FTP_PASSWORD }} ${{ secrets.DAI_FTP_SERVER }};
-          mirror -R --delete dist/ /home/wdddzygb/3dai --verbose;
+          mirror -R --delete dist/* /home/wdddzygb/3dai --verbose;
           bye
           "
