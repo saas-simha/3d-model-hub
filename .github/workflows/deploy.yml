@@ -1,0 +1,22 @@
+name: Publish website to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy using Custom FTP Action
+        uses: admin1439/test_dummy@main
+        with:
+          server: ${{ secrets.DAI_FTP_SERVER }}
+          username: ${{ secrets.DAI_FTP_USERNAME }}
+          password: ${{ secrets.DAI_FTP_PASSWORD }}
