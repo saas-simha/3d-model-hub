@@ -25,23 +25,24 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Verify dist folder
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "Error: dist folder not found. Build may have failed."
-            exit 1
-          fi
-
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install lftp -y
 
-      - name: Deploy dist to cPanel
+      - name: Deploy clean build to cPanel
         run: |
           lftp -c "
           set ssl:verify-certificate no;
           set ftp:ssl-allow yes;
           set ftp:passive-mode on;
           open -u ${{ secrets.DAI_FTP_USERNAME }},${{ secrets.DAI_FTP_PASSWORD }} ${{ secrets.DAI_FTP_SERVER }};
-          mirror -R --delete dist/ 3dai --verbose ;
+          
+          cd 3dai;
+
+          # DELETE everything in target folder
+          rm -rf *;
+
+          # upload fresh build
+          mirror -R dist/ . --verbose;
+
           bye
           "
