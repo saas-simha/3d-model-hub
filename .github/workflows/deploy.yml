@@ -27,7 +27,6 @@ jobs:
           set ssl:verify-certificate no
           set ftp:ssl-allow yes
           set ftp:passive-mode on
-          cd 3dai
           rm -rf *
           mirror -R dist/ .
           bye
