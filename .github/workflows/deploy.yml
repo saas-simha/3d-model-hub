@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy using Custom FTP Action
-        uses: admin1439/test_dummy@main
+        uses: ./.github/actions/ftp-deploy
         with:
           server: ${{ secrets.DAI_FTP_SERVER }}
           username: ${{ secrets.DAI_FTP_USERNAME }}

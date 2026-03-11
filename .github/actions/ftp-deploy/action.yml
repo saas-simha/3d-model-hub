@@ -1,0 +1,34 @@
+name: "My Custom FTP Deploy Action"
+description: "Uploads project files to cPanel using FTP"
+
+inputs:
+  server:
+    description: "FTP server address"
+    required: true
+
+  username:
+    description: "FTP username"
+    required: true
+
+  password:
+    description: "FTP password"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install lftp
+      run: sudo apt-get update && sudo apt-get install lftp -y
+      shell: bash
+
+    - name: Upload files to cPanel
+      run: |
+        lftp -c "
+        set ssl:verify-certificate no;
+        set ftp:ssl-allow yes;
+        set ftp:passive-mode on;
+        open -u ${{ inputs.username }},${{ inputs.password }} ${{ inputs.server }};
+        mirror -R . /home/wdddzygb/3dai;
+        bye
+        "
+      shell: bash
