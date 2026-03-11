@@ -1,48 +1,34 @@
-name: Publish website to cPanel
+name: Deploy to cPanel
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
+      - run: npm run build
 
-      - name: Build project
-        run: npm run build
+      - name: Install FTP client
+        run: sudo apt-get update && sudo apt-get install -y lftp
 
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install lftp -y
-
-      - name: Deploy clean build to cPanel
+      - name: Deploy to cPanel
         run: |
-          lftp -c "
-          set ssl:verify-certificate no;
-          set ftp:ssl-allow yes;
-          set ftp:passive-mode on;
-          open -u ${{ secrets.DAI_FTP_USERNAME }},${{ secrets.DAI_FTP_PASSWORD }} ${{ secrets.DAI_FTP_SERVER }};
-          
-          cd 3dai;
-
-          # DELETE everything in target folder
-          rm -rf *;
-
-          # upload fresh build
-          mirror -R dist/ . --verbose;
-
+          lftp -u ${{ secrets.DAI_FTP_USERNAME }},${{ secrets.DAI_FTP_PASSWORD }} ${{ secrets.DAI_FTP_SERVER }} <<EOF
+          set ssl:verify-certificate no
+          set ftp:ssl-allow yes
+          set ftp:passive-mode on
+          cd 3dai
+          rm -rf *
+          mirror -R dist/ .
           bye
-          "
+          EOF
