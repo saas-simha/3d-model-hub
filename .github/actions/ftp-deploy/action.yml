@@ -28,7 +28,7 @@ runs:
         set ftp:ssl-allow yes;
         set ftp:passive-mode on;
         open -u ${{ inputs.username }},${{ inputs.password }} ${{ inputs.server }};
-        mirror -R dist/ /home/wdddzygb/3dai;
+        mirror -R --delete dist/ /home/wdddzygb/3dai;
         bye
         "
       shell: bash
