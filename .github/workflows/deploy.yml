@@ -10,17 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
@@ -28,9 +25,16 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy using Custom FTP Action
-        uses: ./.github/actions/ftp-deploy
-        with:
-          server: ${{ secrets.DAI_FTP_SERVER }}
-          username: ${{ secrets.DAI_FTP_USERNAME }}
-          password: ${{ secrets.DAI_FTP_PASSWORD }}
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install lftp -y
+
+      - name: Deploy dist to cPanel
+        run: |
+          lftp -c "
+          set ssl:verify-certificate no;
+          set ftp:ssl-allow yes;
+          set ftp:passive-mode on;
+          open -u ${{ secrets.DAI_FTP_USERNAME }},${{ secrets.DAI_FTP_PASSWORD }} ${{ secrets.DAI_FTP_SERVER }};
+          mirror -R --delete dist/ /home/wdddzygb/3dai;
+          bye
+          "
